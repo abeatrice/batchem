@@ -25,7 +25,7 @@ func main() {
 
 	// push()
 	messages := poll()
-	process(messages)
+	batch(messages)
 
 	fmt.Printf("[%s] Done\n", time.Now().Format("2006-01-02 15:04:05"))
 }
@@ -61,15 +61,18 @@ func poll() []*sqs.Message {
 	return res.Messages
 }
 
-func process(messages []*sqs.Message) {
+func batch(messages []*sqs.Message) {
 	for _, message := range messages {
 		wg.Add(1)
-		go func(m *sqs.Message) {
-			fmt.Printf("%s\n", *m.Body)
-			fmt.Printf("%s\n", *m.MessageId)
-		}(message)
+		go process(message)
 	}
 	wg.Wait()
+}
+
+func process(message *sqs.Message) {
+	defer wg.Done()
+	fmt.Printf("%s\n", *message.Body)
+	fmt.Printf("%s\n", *message.MessageId)
 }
 
 func check(e error) {
