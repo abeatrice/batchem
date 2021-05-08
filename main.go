@@ -72,7 +72,15 @@ func batch(messages []*sqs.Message) {
 func process(message *sqs.Message) {
 	defer wg.Done()
 	fmt.Printf("%s\n", *message.Body)
-	fmt.Printf("%s\n", *message.MessageId)
+	delete(message.ReceiptHandle)
+}
+
+func delete(ReceiptHandle *string) {
+	_, err := svc.DeleteMessage(&sqs.DeleteMessageInput{
+		QueueUrl:      aws.String(url),
+		ReceiptHandle: ReceiptHandle,
+	})
+	check(err)
 }
 
 func check(e error) {
