@@ -24,8 +24,7 @@ func main() {
 	url = "https://sqs.us-east-1.amazonaws.com/803551335240/batchem"
 
 	// push()
-	messages := poll()
-	batch(messages)
+	batch(poll())
 
 	fmt.Printf("[%s] Done\n", time.Now().Format("2006-01-02 15:04:05"))
 }
