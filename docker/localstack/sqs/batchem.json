@@ -1,0 +1,12 @@
+{
+    "Attributes": {
+        "ApproximateNumberOfMessagesNotVisible": "0",
+        "MessageRetentionPeriod": "345600",
+        "ApproximateNumberOfMessagesDelayed": "0",
+        "MaximumMessageSize": "262144",
+        "ApproximateNumberOfMessages": "0",
+        "ReceiveMessageWaitTimeSeconds": "0",
+        "DelaySeconds": "10",
+        "VisibilityTimeout": "60"
+    }
+}

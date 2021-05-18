@@ -1,0 +1,6 @@
+FROM localstack/localstack:0.11.2
+
+ADD ./docker/localstack/ /localstack_files
+ADD ./docker/localstack/init /docker-entrypoint-initaws.d
+
+ENV SERVICES=dynamodb,sqs

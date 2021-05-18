@@ -19,9 +19,13 @@ var url string
 func main() {
 	sess = session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
+		Config: aws.Config{
+			Endpoint: aws.String("http://localhost:4566"),
+		},
 	}))
 	svc = sqs.New(sess)
-	url = "https://sqs.us-east-1.amazonaws.com/803551335240/batchem"
+	// url = "https://sqs.us-east-1.amazonaws.com/803551335240/batchem"
+	url = "http://localhost:4566/queue/batchem"
 
 	// push()
 	batch(poll())
@@ -54,7 +58,6 @@ func poll() []*sqs.Message {
 	res, err := svc.ReceiveMessage(&sqs.ReceiveMessageInput{
 		QueueUrl:            aws.String(url),
 		MaxNumberOfMessages: aws.Int64(10),
-		WaitTimeSeconds:     aws.Int64(20),
 	})
 	check(err)
 	return res.Messages
